@@ -7,6 +7,7 @@ namespace Darts.Lib.Models
     public class PlayerModel
     {
         public int player_Id { get; set; }
+        public int Team_Id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public int gamesCount { get; set; }
@@ -14,5 +15,6 @@ namespace Darts.Lib.Models
         public int highestFinish { get; set; }
         public int thrownDarts { get; set; }
         public int totalScore { get; set; }
+
     }
 }

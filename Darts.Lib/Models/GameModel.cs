@@ -6,10 +6,17 @@ namespace Darts.Lib.Models
 {
     public class GameModel
     {
-        public int game_Id { get; set; }
 
-        public TeamModel team1 { get; set; }
-        public TeamModel team2 { get; set; }
+        public GameModel(int game_Id, List<List<PlayerModel>> players)
+        {
+            Game_Id = game_Id;
+            Players = players;
+
+        }
+        public int Game_Id { get; set; }
+
+        public List<List<PlayerModel>> Players { get; set; }
+
 
     }
 }
