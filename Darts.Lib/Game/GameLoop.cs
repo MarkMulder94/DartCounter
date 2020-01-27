@@ -14,13 +14,14 @@ namespace Darts.Lib.Game
             _players = players;
         }
 
+        int playerTurn = 0; 
+
+        // Spelers onderverdelen over twee teams.
         public List<List<PlayerModel>> DividePlayersIntoTeams()
         {
             List<List<PlayerModel>> teams = new List<List<PlayerModel>>();
-
             List<PlayerModel> _team1 = new List<PlayerModel>();
             List<PlayerModel> _team2 = new List<PlayerModel>();
-
             foreach (var player in _players)
             {
                 switch (player.Team_Id)
@@ -37,29 +38,45 @@ namespace Darts.Lib.Game
                     break;
                     default:
                         break;
-                    
                 }
             }
-            teams.Add(_team1);
-            teams.Add(_team2);
+            if (_team1.Count != _team2.Count)
+            {
+                // TODO: Foutmelding, oneven teams.
+                // Idee: Bot toevoegen suggestie?
+                throw new Exception();
+            }
+            else
+            {
+                teams.Add(_team1);
+                teams.Add(_team2);
+            }
+
             return teams;     
         }
-        public List<int> StartGame()
+        // Starting the game
+        public List<PlayerCurrentLegModel> Setup()
         {
             var teams = DividePlayersIntoTeams();
-            int AantalSpelers = 0; 
-            List<int> playerid = new List<int>();
-
+            List<PlayerCurrentLegModel> players = new List<PlayerCurrentLegModel>();
+            // Maak een lijst van de player_id's 
             foreach (var team in teams)
             {
-                AantalSpelers += team.Count;
                 foreach (var player in team)
                 {
-                    playerid.Add(player.player_Id);
+                    players.Add(new PlayerCurrentLegModel { Player_Id = player.player_Id, Team_Id = player.Team_Id });
                 }
-
             }
-            return playerid;
+            return players;
+        // Start het spel
+        }
+        public void PlayerThrow(int thrownPoints, int playerTurn)
+        {
+            foreach (var player in Setup())
+            {
+                int score = player.CurrentScore;
+                var newScore = new LegRunner(score).Turn(thrownPoints);
+            }
         }
     }
 }
