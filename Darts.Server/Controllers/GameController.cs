@@ -32,11 +32,11 @@ namespace Darts.Server.Controllers
 
         [Route("Entity/")]
         [HttpPost]
-        public async Task PostEntity(List<int> PlayerIdAndTeam)
+        public async Task<ActionResult<GameModel>> PostEntity(List<int> PlayerIdAndTeam)
         {
             List<WantGamePlayerModel> players = new List<WantGamePlayerModel>();
             List<TeamModel> teamsz = new List<TeamModel>();
-
+            // Create PlayerModel
             for (int i = 0; i < PlayerIdAndTeam.Count; i+=2)
             {
                 var playerModel = _context.UserModels.Where(x => x.player_Id == PlayerIdAndTeam[i]).FirstOrDefault();
@@ -48,10 +48,13 @@ namespace Darts.Server.Controllers
                 };
                 players.Add(player);
             }
-            var y = new TeamCreation().MakeTeams(players);
-            GameModel x = new GameModel() { TeamModel = y };
-            _context.Games.Add(x);
+            // create TeamModel
+            var teamModels = new TeamCreation().MakeTeams(players);
+            // create GameModel
+            var gameModel = new GameModel() { TeamModel = teamModels };
+            _context.Games.Add(gameModel);
             await _context.SaveChangesAsync();
+            return CreatedAtAction("GetGameModel", new { id = gameModel.Game_Id }, gameModel);
         }
     }
 }
