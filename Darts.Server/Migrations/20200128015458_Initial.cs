@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Darts.Server.Data.Migrations
+namespace Darts.Server.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,11 +47,42 @@ namespace Darts.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    Game_Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.Game_Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserModels",
+                columns: table => new
+                {
+                    player_Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    AverageScore = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
+                    GamesPlayed = table.Column<int>(nullable: false),
+                    HighestFinish = table.Column<int>(nullable: false),
+                    ThrownDarts = table.Column<int>(nullable: false),
+                    TotalScore = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserModels", x => x.player_Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +103,7 @@ namespace Darts.Server.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +183,55 @@ namespace Darts.Server.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    Team_Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CurrentScore = table.Column<int>(nullable: false),
+                    Legs = table.Column<int>(nullable: false),
+                    Sets = table.Column<int>(nullable: false),
+                    GameModelGame_Id = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.Team_Id);
+                    table.ForeignKey(
+                        name: "FK_Teams_Games_GameModelGame_Id",
+                        column: x => x.GameModelGame_Id,
+                        principalTable: "Games",
+                        principalColumn: "Game_Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Players",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeamNumber = table.Column<int>(nullable: false),
+                    player_Id = table.Column<int>(nullable: false),
+                    TeamModelTeam_Id = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Players", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Players_Teams_TeamModelTeam_Id",
+                        column: x => x.TeamModelTeam_Id,
+                        principalTable: "Teams",
+                        principalColumn: "Team_Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Players_UserModels_player_Id",
+                        column: x => x.player_Id,
+                        principalTable: "UserModels",
+                        principalColumn: "player_Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +270,21 @@ namespace Darts.Server.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Players_TeamModelTeam_Id",
+                table: "Players",
+                column: "TeamModelTeam_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Players_player_Id",
+                table: "Players",
+                column: "player_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teams_GameModelGame_Id",
+                table: "Teams",
+                column: "GameModelGame_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,10 +305,22 @@ namespace Darts.Server.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Players");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
+
+            migrationBuilder.DropTable(
+                name: "UserModels");
+
+            migrationBuilder.DropTable(
+                name: "Games");
         }
     }
 }

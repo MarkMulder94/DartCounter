@@ -4,20 +4,118 @@ using Darts.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Darts.Server.Data.Migrations
+namespace Darts.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200128015458_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Darts.Lib.Models.GameModel", b =>
+                {
+                    b.Property<int>("Game_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Game_Id");
+
+                    b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Darts.Lib.Models.PlayerModel", b =>
+                {
+                    b.Property<int>("player_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("AverageScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GamesPlayed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HighestFinish")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ThrownDarts")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalScore")
+                        .HasColumnType("int");
+
+                    b.HasKey("player_Id");
+
+                    b.ToTable("UserModels");
+                });
+
+            modelBuilder.Entity("Darts.Lib.Models.TeamModel", b =>
+                {
+                    b.Property<int>("Team_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CurrentScore")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GameModelGame_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Legs")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sets")
+                        .HasColumnType("int");
+
+                    b.HasKey("Team_Id");
+
+                    b.HasIndex("GameModelGame_Id");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("Darts.Lib.Models.WantGamePlayerModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("TeamModelTeam_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("player_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamModelTeam_Id");
+
+                    b.HasIndex("player_Id");
+
+                    b.ToTable("Players");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -217,6 +315,26 @@ namespace Darts.Server.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Darts.Lib.Models.TeamModel", b =>
+                {
+                    b.HasOne("Darts.Lib.Models.GameModel", null)
+                        .WithMany("TeamModel")
+                        .HasForeignKey("GameModelGame_Id");
+                });
+
+            modelBuilder.Entity("Darts.Lib.Models.WantGamePlayerModel", b =>
+                {
+                    b.HasOne("Darts.Lib.Models.TeamModel", null)
+                        .WithMany("Players")
+                        .HasForeignKey("TeamModelTeam_Id");
+
+                    b.HasOne("Darts.Lib.Models.PlayerModel", "PlayerModel")
+                        .WithMany()
+                        .HasForeignKey("player_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

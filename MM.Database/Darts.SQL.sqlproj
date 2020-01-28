@@ -64,6 +64,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Player.sql" />
     <Build Include="dbo\Tables\Game.sql" />
+    <Build Include="dbo\StoredProcedures\spGame_Create.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MM.Database.refactorlog" />

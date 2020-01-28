@@ -34,6 +34,7 @@ namespace Darts.Server
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSwaggerGen(c =>
@@ -81,7 +82,7 @@ namespace Darts.Server
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                               endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();

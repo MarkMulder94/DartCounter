@@ -28,7 +28,7 @@ namespace UnitTests.Core.Game.GameRunnerTests
         [Fact]
         public void ReturnTeamsSorted_GivenPlayers()
         {
-            var result = new GameLoop(SamplePlayersData()).DividePlayersIntoTeams();
+            var result = new MakeGame(SamplePlayersData()).DividePlayersIntoTeams();
             result.Should().NotBeNull();   
         }
 
@@ -36,7 +36,7 @@ namespace UnitTests.Core.Game.GameRunnerTests
         [InlineData(401, 501, 100)]
         public void ReturnNewScore_GivenCurrentAndThrow(int expected, int currentScore, int thrownPoints)
         {
-            var result = new GameLoop(SamplePlayersData()).StartGame();
+            var result = new MakeGame(SamplePlayersData()).Setup();
   
             Assert.Equal(expected, new LegRunner(currentScore).Turn(thrownPoints));
         }

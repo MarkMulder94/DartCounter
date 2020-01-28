@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Darts.Lib.Models
 {
     public class PlayerModel
     {
+        [Key]
         public int player_Id { get; set; }
-        public int Team_Id { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public int gamesCount { get; set; }
-        public decimal avgScore { get; set; }
-        public int highestFinish { get; set; }
-        public int thrownDarts { get; set; }
-        public int totalScore { get; set; }
+
+        // spelerinfo
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        // spelerstatistieken
+
+        [Column(TypeName = "decimal(5,2)")]
+        public decimal AverageScore { get; set; } = 0;
+        public int GamesPlayed { get; set; } = 0;
+        public int HighestFinish { get; set; } = 0;
+        public int ThrownDarts { get; set; } = 0;
+        public int TotalScore { get; set; } = 0;
 
     }
 }

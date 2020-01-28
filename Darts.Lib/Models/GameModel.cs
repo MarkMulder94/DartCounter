@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Darts.Lib.Models
 {
     public class GameModel
     {
-
-        public GameModel(int game_Id, List<List<PlayerModel>> players)
-        {
-            Game_Id = game_Id;
-            Players = players;
-
-        }
+        [Key]
         public int Game_Id { get; set; }
-
-        public List<List<PlayerModel>> Players { get; set; }
-
-
+        public ICollection<TeamModel> TeamModel { get; set; }
     }
 }
