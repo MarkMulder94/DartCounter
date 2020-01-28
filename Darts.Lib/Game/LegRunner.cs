@@ -6,24 +6,18 @@ namespace Darts.Lib.Game
 {
     public class LegRunner
     {
-        private int _currentScore;
 
-        public LegRunner(int currentScore)
-        {
-            _currentScore = currentScore;
-        }
-
-        public int Turn(int thrownPoints)
+        public static int Turn(int thrownPoints, int currentScore)
         {
             int newScore;
-            if (thrownPoints > _currentScore)
+            if (thrownPoints > currentScore)
             {
                 // dood 
-                return _currentScore;
+                return currentScore;
             }
             else
             {
-                newScore = _currentScore - thrownPoints;
+                newScore = currentScore - thrownPoints;
             }
             if (newScore != 0)
             {

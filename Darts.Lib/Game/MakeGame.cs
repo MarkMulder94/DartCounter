@@ -1,33 +1,35 @@
-﻿using Darts.Lib.Models;
+﻿
+
+using Darts.Lib.DataAcces;
+using Darts.Lib.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Darts.Lib.Game
 {
     public class MakeGame
     {
-        public MakeGame()
+        private readonly int _gameId;
+        private List<TeamModel> _teams;
+        private List<WantGamePlayerModel> _competitors;
+
+        public MakeGame(int gameId)
         {
+            _gameId = gameId;
+            _teams = GetTeams.GetTheTeamsOnExistingGame(_gameId);
         }
 
-        // Spelers onderverdelen over twee teams.
-        public void something()
+        public void CheckIfGameIsOver()
         {
 
-            //GameModel test = new GameModel() { TeamModel = new List<TeamModel>() };
-            //foreach (var item in _teams)
-            //{
-            //    test.TeamModel.Add(item);
-            //}
-            //return test;
-
+            while (_teams.TrueForAll(x => x.CurrentScore != 0))
+            {
+                LegRunner.Turn(200, _teams[0].CurrentScore);
+            }
         }
 
-        public void InitiateLegIfNeeded()
-        {
-            
-
-        }
     }
 }

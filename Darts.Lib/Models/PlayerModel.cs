@@ -8,8 +8,14 @@ namespace Darts.Lib.Models
 {
     public class PlayerModel
     {
+        public PlayerModel(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
         [Key]
-        public int player_Id { get; set; }
+        public int Player_Id { get; set; }
 
         // spelerinfo
         public string FirstName { get; set; }

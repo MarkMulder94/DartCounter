@@ -11,6 +11,7 @@ using Darts.Lib.DataAcces;
 using Darts.Lib.Game;
 using Darts.Lib.Models;
 using Darts.Server.Data;
+using Darts.Server.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,24 +35,7 @@ namespace Darts.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<GameModel>> PostEntity(List<int> PlayerIdAndTeam)
         {
-            List<WantGamePlayerModel> players = new List<WantGamePlayerModel>();
-            List<TeamModel> teamsz = new List<TeamModel>();
-            // Create PlayerModel
-            for (int i = 0; i < PlayerIdAndTeam.Count; i+=2)
-            {
-                var playerModel = _context.UserModels.Where(x => x.player_Id == PlayerIdAndTeam[i]).FirstOrDefault();
-                WantGamePlayerModel player = new WantGamePlayerModel()
-                {
-                    PlayerModel = playerModel,
-                    player_Id = PlayerIdAndTeam[i],
-                    TeamNumber = PlayerIdAndTeam[i + 1]
-                };
-                players.Add(player);
-            }
-            // create TeamModel
-            var teamModels = new TeamCreation().MakeTeams(players);
-            // create GameModel
-            var gameModel = new GameModel() { TeamModel = teamModels };
+            var gameModel = new MakeStartGame(_context).MakeTheGame(PlayerIdAndTeam);
             _context.Games.Add(gameModel);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetGameModel", new { id = gameModel.Game_Id }, gameModel);

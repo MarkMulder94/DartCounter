@@ -11,31 +11,11 @@ namespace Darts.Lib.DataAcces
 {
     public class SqlDatabaseAccess
     {
-        public string GetConnectionString()
-        {
-            return "Data Source=DESKTOP-OISNHO6;Initial Catalog=DartsDatabase;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        }
+        private string _connectionString;
 
-        public List<T> LoadData<T, U>(string storedProcedure, U parameters)
+        public SqlDatabaseAccess(string connectionString)
         {
-            string connectionString = GetConnectionString();
-
-            using (IDbConnection connection = new SqlConnection(connectionString))
-            {
-                List<T> rows = connection.Query<T>(storedProcedure, parameters,
-                    commandType: CommandType.StoredProcedure).ToList();
-                return rows;
-            }
-        }
-        public void SaveData<T>(string storedProcedure, T parameters)
-        {
-            string connectionString = GetConnectionString();
-
-            using (IDbConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Execute(storedProcedure, parameters,
-                    commandType: CommandType.StoredProcedure);
-            }
+            _connectionString = connectionString;
         }
     }
 }
