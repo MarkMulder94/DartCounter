@@ -13,6 +13,7 @@ namespace Darts.Lib.Models
         public int CurrentScore { get; set; } = 501;
         public int Legs { get; set; } = 0;
         public int Sets { get; set; } = 0;
+        public int ThrownDarts { get; set; } = 0; 
         public ICollection<WantGamePlayerModel> Players { get; set; }
     }
 }

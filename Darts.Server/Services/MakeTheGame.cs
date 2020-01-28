@@ -27,7 +27,7 @@ namespace Darts.Server.Services
             for (int i = 0; i < PlayerIdAndTeam.Count; i += 2)
             {
                 var playerModel = _context.UserModels.Where(x => x.Player_Id == PlayerIdAndTeam[i]).FirstOrDefault();
-                WantGamePlayerModel player = new WantGamePlayerModel(playerModel, PlayerIdAndTeam[i + 1], PlayerIdAndTeam[i]);
+                WantGamePlayerModel player = new WantGamePlayerModel() { player_Id = PlayerIdAndTeam[i], PlayerModel = playerModel, TeamNumber = PlayerIdAndTeam[i+1] };
                 players.Add(player);
             }
             // create TeamModel

@@ -30,9 +30,10 @@ namespace UnitTests.Core.Game.GameRunnerTests
         {
             var userList = SeedUsers();
             var playerList = new List<WantGamePlayerModel>();
+            
 
-            var player1 = new WantGamePlayerModel(userList.FirstOrDefault(x => x.Player_Id == idPlayer1), 1, idPlayer1);
-            var player2 = new WantGamePlayerModel(userList.FirstOrDefault(x => x.Player_Id == idPlayer2), 2, idPlayer2);
+            var player1 = new WantGamePlayerModel() { player_Id = idPlayer1, TeamNumber = 2 };
+            var player2 = new WantGamePlayerModel() { player_Id = idPlayer2, TeamNumber = 2 };
 
             playerList.Add(player1);
             playerList.Add(player2);
@@ -49,22 +50,30 @@ namespace UnitTests.Core.Game.GameRunnerTests
         [Fact]
         public void GiveBackTeams_GivenGameId()
         {
-            var result = GetTeams.GetTheTeamsOnExistingGame(5);
+            var result = GetTeams.GetTheTeamsOnExistingGame(11);
             result.Should().HaveCount(2);
         }
+        //[Theory]
+        //[InlineData(20, 481)]
+        //public void GiveBackNewScore_GivenCurrentThrow(int score, int expected)
+        //{
+        //    List<int> StartScores = new List<int>() { 501, 501 };
+        //    var game = new GameRunner(5);
+        //    var ScoresBeforeThrow = game.Scores();
+        //    game.ThrowTurn(score);
+        //    var ScoresAfterThrow = game.Scores();
+        //    Assert.Equal(StartScores, ScoresBeforeThrow);
+        //    Assert.Equal(expected, ScoresAfterThrow[0]);
+        //}
         [Theory]
-        [InlineData(20, 481)]
-        public void GiveBackNewScore_GivenCurrentThrow(int score, int expected)
+        [InlineData(30, 51)]
+        public void GiveBackThrownDarts_GivenNothing(int expected, int thrown)
         {
-            List<int> StartScores = new List<int>() { 501, 501 };
-            var game = new GameRunner(5);
-            var ScoresBeforeThrow = game.Scores();
-            game.ThrowTurn(score);
-            var ScoresAfterThrow = game.Scores();
-
-            Assert.Equal(StartScores, ScoresBeforeThrow);
-            Assert.Equal(expected, ScoresAfterThrow[0]);
+            var game = new GameRunner(11);
+            int x = game.StartLeg(thrown);
+            Assert.Equal(expected, x);
         }
+
 
 
 
