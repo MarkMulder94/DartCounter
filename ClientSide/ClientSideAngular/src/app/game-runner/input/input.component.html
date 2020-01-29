@@ -1,0 +1,48 @@
+<div class="jumbotron" style="border:2px solid black">
+  <!-- Scores -->
+  <div class="row">
+    <div class="col-6">
+      <h1 style="text-align: center;">PlayerName</h1>
+      <hr />
+      <h1 style="text-align: center;">460</h1>
+      <p style="text-align: center;">Laatste Score : 41</p>
+      <p style="text-align: center;">Gemiddeld :</p>
+    </div>
+    <div class="col-6">
+      <h1 style="text-align: center;">PlayerName</h1>
+      <hr />
+      <h1 style="text-align: center;">460</h1>
+      <p style="text-align: center;">Laatste Score : 41</p>
+      <p style="text-align: center;">Gemiddeld :</p>
+    </div>
+  </div>
+  <!-- Display input, and confim. Or go back a score-->
+  <div class="row justify-content-around">
+    <div class="col-12 align-self-center">
+      <div class="maindisplay">
+        {{ mainText }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Numpad -->
+
+  <div class="col">
+    <div class="keys numkey one-line" (click)="pressKey('7')">7</div>
+    <div class="keys numkey one-line" (click)="pressKey('8')">8</div>
+    <div class="keys numkey one-line" (click)="pressKey('9')">9</div>
+  </div>
+  <div class="col">
+    <div class="keys numkey one-line" (click)="pressKey('4')">4</div>
+    <div class="keys numkey one-line" (click)="pressKey('5')">5</div>
+    <div class="keys numkey one-line" (click)="pressKey('6')">6</div>
+  </div>
+  <div class="col">
+    <div class="keys numkey one-line" (click)="pressKey('1')">1</div>
+    <div class="keys numkey one-line" (click)="pressKey('2')">2</div>
+    <div class="keys numkey one-line" (click)="pressKey('3')">3</div>
+    <div class="keys ackey one-line" (click)="allClear()">Backspace</div>
+    <div class="keys numkey zerokey one-line" (click)="pressKey('0')">0</div>
+    <div class="keys equalkey one-line" (click)="getAnswer()">Enter</div>
+  </div>
+</div>

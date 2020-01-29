@@ -1,0 +1,49 @@
+.maindisplay {
+  background: lightgrey;
+  font-size: 4rem;
+  text-align: center;
+  font-family: Courier, monospace;
+  overflow: auto;
+  max-width: 100%;
+}
+.keys {
+  margin: 0;
+  width: 33%;
+  height: 20%;
+  background: darkgrey;
+  color: black;
+  padding: 1%;
+  font-size: 2rem;
+  text-align: center;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.keys:hover {
+  background: grey;
+}
+.keys:active {
+  background: lightblue;
+}
+.one-line {
+  display: inline-block;
+}
+#SeeCurrentInput {
+  background: white;
+  font-size: 2rem;
+  text-align: center;
+  font-family: "Segoe UI";
+  font-weight: bold;
+  overflow: auto;
+  max-height: 5rem;
+  max-width: 33%;
+  min-width: 33%;
+  border: 0px;
+}
+.btn {
+  font-size: 2rem;
+  text-align: center;
+  font-family: Courier, monospace;
+  max-height: 4rem;
+  max-width: 32%;
+  min-width: 32%;
+}
