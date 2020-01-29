@@ -38,11 +38,10 @@ namespace Darts.Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("AverageScore")
-                        .HasColumnType("decimal(5,2)");
-
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<int>("GamesPlayed")
                         .HasColumnType("int");
@@ -51,7 +50,9 @@ namespace Darts.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<int>("ThrownDarts")
                         .HasColumnType("int");

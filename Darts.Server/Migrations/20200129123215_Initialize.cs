@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Darts.Server.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,11 +62,10 @@ namespace Darts.Server.Migrations
                 name: "UserModels",
                 columns: table => new
                 {
-                    player_Id = table.Column<int>(nullable: false)
+                    Player_Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    AverageScore = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
                     GamesPlayed = table.Column<int>(nullable: false),
                     HighestFinish = table.Column<int>(nullable: false),
                     ThrownDarts = table.Column<int>(nullable: false),
@@ -74,7 +73,7 @@ namespace Darts.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserModels", x => x.player_Id);
+                    table.PrimaryKey("PK_UserModels", x => x.Player_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,6 +191,7 @@ namespace Darts.Server.Migrations
                     CurrentScore = table.Column<int>(nullable: false),
                     Legs = table.Column<int>(nullable: false),
                     Sets = table.Column<int>(nullable: false),
+                    ThrownDarts = table.Column<int>(nullable: false),
                     GameModelGame_Id = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -228,7 +228,7 @@ namespace Darts.Server.Migrations
                         name: "FK_Players_UserModels_player_Id",
                         column: x => x.player_Id,
                         principalTable: "UserModels",
-                        principalColumn: "player_Id",
+                        principalColumn: "Player_Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

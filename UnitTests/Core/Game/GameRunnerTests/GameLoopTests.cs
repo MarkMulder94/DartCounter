@@ -14,10 +14,10 @@ namespace UnitTests.Core.Game.GameRunnerTests
         {
             var playerList = new List<PlayerModel>();
 
-            var player1 = new PlayerModel("Mark", "Mulder") { Player_Id = 1 };
-            var player2 = new PlayerModel("Kelly", "Schinkel") { Player_Id = 2 };
-            var player3 = new PlayerModel("Iemand", "Mulder") { Player_Id = 3 };
-            var player4 = new PlayerModel("Test", "Mulder") { Player_Id = 4 };
+            var player1 = new PlayerModel() { FirstName = "Mark" , LastName = "Mulder", Player_Id = 1 };
+            var player2 = new PlayerModel() { FirstName = "Kelly" , LastName = "Mulder", Player_Id = 2 };
+            var player3 = new PlayerModel() { FirstName = "Frank" , LastName = "Mulder", Player_Id = 3 };
+            var player4 = new PlayerModel() { FirstName = "Jermaine" , LastName = "Mulder", Player_Id = 4 };
 
             playerList.Add(player1);
             playerList.Add(player2);

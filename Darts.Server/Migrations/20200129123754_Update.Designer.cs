@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Darts.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200128015458_Initial")]
-    partial class Initial
+    [Migration("20200129123754_Update")]
+    partial class Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,16 +35,15 @@ namespace Darts.Server.Migrations
 
             modelBuilder.Entity("Darts.Lib.Models.PlayerModel", b =>
                 {
-                    b.Property<int>("player_Id")
+                    b.Property<int>("Player_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("AverageScore")
-                        .HasColumnType("decimal(5,2)");
-
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<int>("GamesPlayed")
                         .HasColumnType("int");
@@ -53,7 +52,9 @@ namespace Darts.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<int>("ThrownDarts")
                         .HasColumnType("int");
@@ -61,7 +62,7 @@ namespace Darts.Server.Migrations
                     b.Property<int>("TotalScore")
                         .HasColumnType("int");
 
-                    b.HasKey("player_Id");
+                    b.HasKey("Player_Id");
 
                     b.ToTable("UserModels");
                 });
@@ -83,6 +84,9 @@ namespace Darts.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Sets")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThrownDarts")
                         .HasColumnType("int");
 
                     b.HasKey("Team_Id");

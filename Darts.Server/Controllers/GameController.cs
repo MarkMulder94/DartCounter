@@ -21,7 +21,7 @@ namespace Darts.Server.Controllers
 
 
 
-    [Route("api/MakeGame")]
+    [Route("Game")]
     [ApiController]
     public class GameController : ControllerBase
     {
@@ -30,21 +30,31 @@ namespace Darts.Server.Controllers
         {
             _context = context;
         }
-
-        [Route("Entity/")]
+        // Maak een niewe game
+        [Route("Create/")]
         [HttpPost]
-        public async Task<ActionResult<GameModel>> PostEntity(List<int> PlayerIdAndTeam)
+        public async Task<ActionResult<GameModel>> CreateNewAndGameGetIds(List<int> PlayerIdAndTeam)
         {
             var gameModel = new MakeStartGame(_context).MakeTheGame(PlayerIdAndTeam);
-            _context.Games.Add(gameModel);
+            await _context.Games.AddAsync(gameModel);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetGameModel", new { id = gameModel.Game_Id }, gameModel);
-        }
+        }    
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 //[Route("dapper/")]
 //[HttpPost]
-//// TODO: AANPASSEN!
 //// Lelijk, maar het werkt....
 //public void PostDapper(List<PlayerModel> players)
 //{

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Darts.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200128125336_AddingThrownDartsToTeams")]
-    partial class AddingThrownDartsToTeams
+    [Migration("20200129123215_Initialize")]
+    partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,9 +39,6 @@ namespace Darts.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("AverageScore")
-                        .HasColumnType("decimal(5,2)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
