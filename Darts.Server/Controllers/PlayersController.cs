@@ -10,13 +10,13 @@ using Darts.Server.Data;
 
 namespace Darts.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("players")]
     [ApiController]
-    public class PlayerModelsController : ControllerBase
+    public class PlayersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public PlayerModelsController(ApplicationDbContext context)
+        public PlayersController(ApplicationDbContext context)
         {
             _context = context;
         }

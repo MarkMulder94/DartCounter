@@ -13,5 +13,7 @@
 <li>TODO: Speel Anoniem?</li>
 <li>TODO: Meer dan 1 persoon per team</li>
 <li>TODO: Login Screen, maybe later</li>
-
-<app-game></app-game>
+<input placeholder="Voer hier de game-id in" #gameId style="margin: 5px;" />
+<button (click)="addGameId(gameId.value)" [routerLink]="['game']">
+  Ga naar Game
+</button>

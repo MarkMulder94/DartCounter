@@ -10,6 +10,7 @@
       <hr />
       <div ng-show="currentScoreTeam1">
         <h1 class="scoreBoard">{{ currentScoreTeam1 }}</h1>
+        <p>Legs : {{ team1.legs }}</p>
       </div>
       <div ng-show="uitgooiMogelijk">
         <p class="errorDisplay">{{ uitgooiMogelijk }}</p>
@@ -31,6 +32,7 @@
         <h1 class="scoreBoard">
           {{ currentScoreTeam2 }}
         </h1>
+        <p>Legs : {{ team2.legs }}</p>
       </div>
       <div ng-show="uitgooiMogelijk">
         <p style="color: red;">{{ uitgooiMogelijk }}</p>

@@ -35,12 +35,14 @@ export class GameComponent implements OnInit {
   currentScoreTeam2: number = 501;
   lastThrowTeam1: number;
   lastThrowTeam2: number;
+
   //Array's (scoreLogging, throwLogging)
   currentLegScoresTeam1: number[] = [501];
   currentLegScoresTeam2: number[] = [501];
 
   thrownScoresTeam1: number[] = [];
   thrownScoresTeam2: number[] = [];
+  legRunning: boolean = true;
   //#endregion
 
   constructor(private service: GameService, private http: HttpClient) {}
@@ -50,7 +52,7 @@ export class GameComponent implements OnInit {
     this.getAsyncGameData(this.gameNumber);
   }
   async getAsyncGameData(id: number) {
-    this.game = await this.service.getAsyncGameData(id);
+    this.game = await this.service.getAsyncGameData();
     this.team1 = this.game.teamModel[0];
     this.team2 = this.game.teamModel[1];
     this.team1.players.forEach(x => {
@@ -62,10 +64,10 @@ export class GameComponent implements OnInit {
   }
   //#endregion
   //#region Calculations
+
   UpdateScore(turnTeam: boolean) {
     if (turnTeam) {
       // Methods
-
       this.insertScore(this.mainText, true);
       this.getAverage(this.thrownScoresTeam1, true);
       this.getLastThrow(this.currentLegScoresTeam1, true);
@@ -109,24 +111,29 @@ export class GameComponent implements OnInit {
     }
   }
   getAverage(arr: number[], team1: boolean) {
-    let sum = arr.reduce((previous, current) => (current += previous));
-    if (team1) {
-      this.AverageTeam1 = sum / arr.length;
-    } else {
-      this.AverageTeam2 = sum / arr.length;
+    if (arr) {
+      let sum = arr.reduce((previous, current) => (current += previous));
+      if (team1) {
+        this.AverageTeam1 = sum / arr.length;
+      } else {
+        this.AverageTeam2 = sum / arr.length;
+      }
     }
   }
   getLastThrow(arr: number[], team1: boolean) {
-    var score1 = arr[arr.length - 2];
-    var score2 = arr[arr.length - 1];
-    var thrown = score1 - score2;
-    if (team1) {
-      this.lastThrowTeam1 = thrown;
-    } else {
-      this.lastThrowTeam2 = thrown;
+    if (arr.length >= 2) {
+      var score1 = arr[arr.length - 2];
+      var score2 = arr[arr.length - 1];
+      var thrown = score1 - score2;
+      if (team1) {
+        this.lastThrowTeam1 = thrown;
+      } else {
+        this.lastThrowTeam2 = thrown;
+      }
     }
   }
   //#endregion
+
   //#region Buttons
   pressKey(key: string) {
     if (this.mainText.length >= 3) {
@@ -141,13 +148,61 @@ export class GameComponent implements OnInit {
     this.errorMessage = "";
   }
   enter() {
-    if (Number(this.mainText) > 180) {
+    var input = Number(this.mainText);
+    var scoresTeam1 = this.currentScoreTeam1;
+    var scoresTeam2 = this.currentScoreTeam2;
+    // first validation
+    if (input > 180) {
       this.errorMessage = "Score kan niet hoger als 180 zijn";
     } else {
-      this.errorMessage = "";
-      this.UpdateScore(this.turnTeam1);
+      // switch on the teams
+      switch (this.turnTeam1) {
+        case true: {
+          // second validation
+          if (this.currentScoreTeam1 - input < 0) {
+            this.errorMessage = "Score kan niet hoger zijn als aantal punten";
+          } else {
+            this.errorMessage = "";
+            this.UpdateScore(this.turnTeam1);
+          }
+          if (this.currentScoreTeam1 == 0) {
+            this.team1.legs++;
+            // reset
+            this.resetDataAfterLeg();
+            break;
+          }
+          break;
+        }
+        case false: {
+          if (scoresTeam2 - input < 0) {
+            this.errorMessage = "Score kan niet hoger zijn als aantal punten";
+          } else {
+            this.errorMessage = "";
+            this.UpdateScore(this.turnTeam1);
+          }
+          if (scoresTeam2 === 0) {
+            this.legRunning = false;
+            break;
+          }
+          break;
+        }
+      }
     }
   }
+  resetDataAfterLeg() {
+    this.currentScoreTeam1 = 501;
+    this.team1.currentScore = 501;
 
-  //#endregion
+    this.currentScoreTeam2 = 501;
+    this.team2.currentScore = 501;
+
+    this.currentLegScoresTeam1.push(501);
+    this.currentLegScoresTeam2.push(501);
+    console.log(this.currentLegScoresTeam2);
+
+    this.thrownScoresTeam1 = [];
+    this.thrownScoresTeam2 = [];
+  }
 }
+
+//#endregion
