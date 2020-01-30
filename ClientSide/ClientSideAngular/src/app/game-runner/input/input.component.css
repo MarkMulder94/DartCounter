@@ -1,13 +1,22 @@
 .maindisplay {
   background: lightgrey;
-  font-size: 4rem;
+  font-size: 3rem;
+  min-height: 5rem;
   text-align: center;
-  font-family: Courier, monospace;
+  font-family: "Segoe UI";
   overflow: auto;
-  max-width: 100%;
+  border: 2px solid black;
+  max-width: 99%;
+}
+.subdisplay {
+  font-size: 1rem;
+  color: red;
+  font-weight: bold;
 }
 .keys {
-  margin: 0;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
   width: 33%;
   height: 20%;
   background: darkgrey;
@@ -46,4 +55,10 @@
   max-height: 4rem;
   max-width: 32%;
   min-width: 32%;
+}
+p {
+  text-align: center;
+}
+h1 {
+  text-align: center;
 }

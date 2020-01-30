@@ -1,18 +1,22 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Player } from "./player.model";
+import { Game } from "./game.model";
+import { Team } from "./team.model";
 
 @Injectable({
   providedIn: "root"
 })
 export class GameService {
-  constructor() {}
-  speler1 = "Speler 1"; // The text that should appear in the sub-display
-  speler2 = "Speler 2"; // The text that should appear in the sub-display
-  currentScore1 = "501"; // The text that should appear in the main display
-  currentScore2 = "501"; // The text that should appear in the main display
-  LoadData() {
-    this.speler1 = "401"; // The text that should appear in the sub-display
-    this.speler2 = "Speler 2"; // The text that should appear in the sub-display
-    this.currentScore1 = "401"; // The text that should appear in the main display
-    this.currentScore2 = "501"; // The text that should appear in the main display
+  readonly rootURL = "https://localhost:44323/";
+  asyncResult: void;
+
+  constructor(private http: HttpClient) {}
+
+  async getAsyncGameData(id: number): Promise<Game> {
+    var result = await this.http
+      .get<Game>(this.rootURL + "Game/" + id)
+      .toPromise();
+    return result;
   }
 }
