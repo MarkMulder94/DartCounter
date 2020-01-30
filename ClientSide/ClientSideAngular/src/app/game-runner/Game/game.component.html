@@ -1,0 +1,81 @@
+<h2 *ngIf="game">Game Id #{{ game?.game_Id }}</h2>
+<!-- Scores -->
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h1 *ngFor="let speler of spelersTeam1">
+        <i class="fa fa-arrow-right" *ngIf="turnTeam1"></i>
+        {{ speler.firstName }}
+      </h1>
+      <hr />
+      <div ng-show="currentScoreTeam1">
+        <h1 class="scoreBoard">{{ currentScoreTeam1 }}</h1>
+      </div>
+      <div ng-show="uitgooiMogelijk">
+        <p class="errorDisplay">{{ uitgooiMogelijk }}</p>
+      </div>
+      <p>
+        Laatste Gooi : <b>{{ lastThrowTeam1 }}</b>
+      </p>
+      <p>
+        Gemiddeld : <b>{{ AverageTeam1 | number: "1.2-2" }}</b>
+      </p>
+    </div>
+    <div class="col-6">
+      <h1 *ngFor="let speler of spelersTeam2">
+        <i class="fa fa-arrow-right" *ngIf="!turnTeam1"> </i>
+        {{ speler.firstName }}
+      </h1>
+      <hr />
+      <div ng-show="currentScoreTeam1">
+        <h1 class="scoreBoard">
+          {{ currentScoreTeam2 }}
+        </h1>
+      </div>
+      <div ng-show="uitgooiMogelijk">
+        <p style="color: red;">{{ uitgooiMogelijk }}</p>
+      </div>
+      <p>
+        Laatste Gooi : <b>{{ lastThrowTeam2 }}</b>
+      </p>
+      <p>
+        Gemiddeld : <b>{{ AverageTeam2 | number: "1.2-2" }}</b>
+      </p>
+    </div>
+  </div>
+  <!-- Display input, and confim. Or go back a score-->
+  <div class="container">
+    <div class="row justify-content-around">
+      <div class="col-12 align-self-center">
+        <div class="maindisplay">
+          <div class="subdisplay" ng-show="errorMessage">
+            {{ errorMessage }}
+          </div>
+          {{ mainText }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Numpad -->
+  <div class="col">
+    <div class="keys numkey one-line" (click)="pressKey('7')">7</div>
+    <div class="keys numkey one-line" (click)="pressKey('8')">8</div>
+    <div class="keys numkey one-line" (click)="pressKey('9')">9</div>
+  </div>
+  <div class="col">
+    <div class="keys numkey one-line" (click)="pressKey('4')">4</div>
+    <div class="keys numkey one-line" (click)="pressKey('5')">5</div>
+    <div class="keys numkey one-line" (click)="pressKey('6')">6</div>
+  </div>
+  <div class="col">
+    <div class="keys numkey one-line" (click)="pressKey('1')">1</div>
+    <div class="keys numkey one-line" (click)="pressKey('2')">2</div>
+    <div class="keys numkey one-line" (click)="pressKey('3')">3</div>
+    <div class="keys numkey one-line" (click)="backspace()">Backspace</div>
+    <div class="keys numkey zerokey one-line" (click)="pressKey('0')">
+      0
+    </div>
+    <div class="keys equalkey one-line" (click)="enter()">Enter</div>
+  </div>
+</div>

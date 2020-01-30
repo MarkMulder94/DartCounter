@@ -5,10 +5,10 @@ import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { GameRunnerComponent } from "./game-runner/game-runner.component";
-import { InputComponent } from "./game-runner/input/input.component";
+import { GameComponent } from "./game-runner/Game/game.component";
 
 @NgModule({
-  declarations: [AppComponent, GameRunnerComponent, InputComponent],
+  declarations: [AppComponent, GameRunnerComponent, GameComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent]

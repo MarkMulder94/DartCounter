@@ -62,3 +62,15 @@ p {
 h1 {
   text-align: center;
 }
+
+h2 {
+  text-align: center;
+}
+
+.scoreBoard {
+  background-color: white;
+  border: 2px solid black;
+}
+.errorDisplay {
+  color: red;
+}

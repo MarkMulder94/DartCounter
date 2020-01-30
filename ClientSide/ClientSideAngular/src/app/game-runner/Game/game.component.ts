@@ -5,16 +5,14 @@ import { HttpClient } from "@angular/common/http";
 import { Team } from "src/app/Shared/team.model";
 import { Player } from "src/app/Shared/player.model";
 import { User } from "src/app/Shared/user.model";
-import { getAttrsForDirectiveMatching } from "@angular/compiler/src/render3/view/util";
 
 @Component({
-  selector: "app-input",
-  templateUrl: "./input.component.html",
-  styleUrls: ["./input.component.css"]
+  selector: "app-game",
+  templateUrl: "./Game.component.html",
+  styleUrls: ["./Game.component.css"]
 })
-export class InputComponent implements OnInit {
-  // #region GameDataOnInit
-  //Variable's
+export class GameComponent implements OnInit {
+  // #region Variable's
   private gameNumber: number = 2;
   AverageTeam1: number = 0;
   AverageTeam2: number = 0;
@@ -46,7 +44,8 @@ export class InputComponent implements OnInit {
   //#endregion
 
   constructor(private service: GameService, private http: HttpClient) {}
-  //#region LoadGameData
+
+  //#region LoadGameData From Api
   ngOnInit() {
     this.getAsyncGameData(this.gameNumber);
   }
@@ -66,6 +65,7 @@ export class InputComponent implements OnInit {
   UpdateScore(turnTeam: boolean) {
     if (turnTeam) {
       // Methods
+
       this.insertScore(this.mainText, true);
       this.getAverage(this.thrownScoresTeam1, true);
       this.getLastThrow(this.currentLegScoresTeam1, true);
@@ -84,20 +84,28 @@ export class InputComponent implements OnInit {
   }
   insertScore(points: string, team1: boolean) {
     if (team1) {
-      this.team1.currentScore -= Number(points);
-      this.thrownScoresTeam1.push(Number(points));
+      if (points!) {
+        this.team1.currentScore -= Number(points);
+        this.thrownScoresTeam1.push(Number(points));
 
-      this.currentLegScoresTeam1.push(this.team1.currentScore);
-      this.currentScoreTeam1 = this.currentLegScoresTeam1[
-        this.currentLegScoresTeam1.length - 1
-      ];
+        this.currentLegScoresTeam1.push(this.team1.currentScore);
+        this.currentScoreTeam1 = this.currentLegScoresTeam1[
+          this.currentLegScoresTeam1.length - 1
+        ];
+      } else {
+        this.errorMessage = "Je moet een score invullen!";
+      }
     } else {
-      this.team2.currentScore -= Number(points);
-      this.thrownScoresTeam2.push(Number(points));
-      this.currentLegScoresTeam2.push(this.team2.currentScore);
-      this.currentScoreTeam2 = this.currentLegScoresTeam2[
-        this.currentLegScoresTeam2.length - 1
-      ];
+      if (points!) {
+        this.team2.currentScore -= Number(points);
+        this.thrownScoresTeam2.push(Number(points));
+        this.currentLegScoresTeam2.push(this.team2.currentScore);
+        this.currentScoreTeam2 = this.currentLegScoresTeam2[
+          this.currentLegScoresTeam2.length - 1
+        ];
+      } else {
+        this.errorMessage = "Je moet een score invullen!";
+      }
     }
   }
   getAverage(arr: number[], team1: boolean) {
