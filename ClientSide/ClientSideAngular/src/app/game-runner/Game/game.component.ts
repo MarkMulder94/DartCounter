@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { GameService } from "src/app/Shared/game.service";
 import { Game } from "src/app/Shared/models/game.model";
 import { HttpClient } from "@angular/common/http";
@@ -18,6 +18,7 @@ export class GameComponent implements OnInit {
   AverageTeam2: number = 0;
   // Game
   game: Game = new Game();
+  gameActive = true;
   // Teams
   team1: Team = new Team();
   team2: Team = new Team();
@@ -35,15 +36,26 @@ export class GameComponent implements OnInit {
   currentScoreTeam2: number = 501;
   lastThrowTeam1: number;
   lastThrowTeam2: number;
-
   //Array's (scoreLogging, throwLogging)
   currentLegScoresTeam1: number[] = [501];
   currentLegScoresTeam2: number[] = [501];
-
   thrownScoresTeam1: number[] = [];
   thrownScoresTeam2: number[] = [];
   legRunning: boolean = true;
+  winMessage: string = "";
+  numbers: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+  gameWinner: User;
   //#endregion
+  @HostListener("document:keydown", ["$event"])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (this.numbers.includes(event.key)) {
+      this.pressKey(event.key);
+    } else if (event.key == "Backspace") {
+      this.backspace();
+    } else if (event.key == "Enter") {
+      this.enter();
+    }
+  }
 
   constructor(private service: GameService, private http: HttpClient) {}
 
@@ -164,25 +176,35 @@ export class GameComponent implements OnInit {
             this.errorMessage = "Score kan niet hoger zijn als aantal punten";
           } else {
             this.errorMessage = "";
-            this.UpdateScore(this.turnTeam1);
+            this.UpdateScore(true);
           }
           if (this.currentScoreTeam1 == 0) {
-            this.team1.legs++;
+            this.errorMessage = "Speler 1 heeft gewonnen";
             // reset
             this.resetDataAfterLeg();
+
+            this.gameWinner = this.team1.players[0].playerModel;
+            alert(this.gameWinner.firstName + " is de winnaar!");
+            this.gameActive = false;
             break;
           }
           break;
         }
         case false: {
-          if (scoresTeam2 - input < 0) {
+          if (this.currentScoreTeam2 - input < 0) {
             this.errorMessage = "Score kan niet hoger zijn als aantal punten";
           } else {
             this.errorMessage = "";
-            this.UpdateScore(this.turnTeam1);
+            this.UpdateScore(false);
           }
-          if (scoresTeam2 === 0) {
-            this.legRunning = false;
+          if (this.currentScoreTeam2 == 0) {
+            this.errorMessage = "Speler 2 heeft gewonnen";
+            // reset
+            this.resetDataAfterLeg();
+
+            this.gameWinner = this.team2.players[0].playerModel;
+            alert(this.gameWinner.firstName + " is de winnaar!");
+            this.gameActive = false;
             break;
           }
           break;

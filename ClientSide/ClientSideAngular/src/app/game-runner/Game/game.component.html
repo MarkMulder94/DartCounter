@@ -1,6 +1,6 @@
-<h2 *ngIf="game">Game Id #{{ game?.game_Id }}</h2>
+<h2 *ngIf="game">Spelnummer #{{ game?.game_Id }}</h2>
 <!-- Scores -->
-<div class="container">
+<div class="container" *ngIf="gameActive">
   <div class="row">
     <div class="col-6">
       <h1 *ngFor="let speler of spelersTeam1">
@@ -10,7 +10,6 @@
       <hr />
       <div ng-show="currentScoreTeam1">
         <h1 class="scoreBoard">{{ currentScoreTeam1 }}</h1>
-        <p>Legs : {{ team1.legs }}</p>
       </div>
       <div ng-show="uitgooiMogelijk">
         <p class="errorDisplay">{{ uitgooiMogelijk }}</p>
@@ -32,7 +31,6 @@
         <h1 class="scoreBoard">
           {{ currentScoreTeam2 }}
         </h1>
-        <p>Legs : {{ team2.legs }}</p>
       </div>
       <div ng-show="uitgooiMogelijk">
         <p style="color: red;">{{ uitgooiMogelijk }}</p>
@@ -71,7 +69,9 @@
     <div class="keys numkey one-line" (click)="pressKey('6')">6</div>
   </div>
   <div class="col">
-    <div class="keys numkey one-line" (click)="pressKey('1')">1</div>
+    <div class="keys numkey one-line" (click)="pressKey('1')">
+      1
+    </div>
     <div class="keys numkey one-line" (click)="pressKey('2')">2</div>
     <div class="keys numkey one-line" (click)="pressKey('3')">3</div>
     <div class="keys numkey one-line" (click)="backspace()">Backspace</div>
@@ -79,5 +79,24 @@
       0
     </div>
     <div class="keys equalkey one-line" (click)="enter()">Enter</div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!gameActive">
+  <h1 style="color: yellow;">
+    Winnaar!!!
+  </h1>
+  <hr />
+  <h1>{{ gameWinner.firstName }} {{ gameWinner.lastName }}</h1>
+  <p>
+    Laatste Gooi : <b>{{ lastThrowTeam1 }}</b>
+  </p>
+  <p>
+    Gemiddeld : <b>{{ AverageTeam1 | number: "1.2-2" }}</b>
+  </p>
+  <div class="wrapper">
+    <button class="btn-lg btn-primary" [routerLink]="['']">
+      Nieuw spel maken
+    </button>
   </div>
 </div>
