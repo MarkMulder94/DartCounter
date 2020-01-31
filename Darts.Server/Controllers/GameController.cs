@@ -52,7 +52,7 @@ namespace Darts.Server.Controllers
             var gameModel = new MakeStartGame(_context).MakeTheGame(PlayerIdAndTeam);
             await _context.Games.AddAsync(gameModel);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetGameModel", new { id = gameModel.Game_Id }, gameModel);
+            return CreatedAtAction("GetGameModel", new { id = gameModel.Game_Id }, gameModel.Game_Id);
         }    
     }
 }

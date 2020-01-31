@@ -1,19 +1,50 @@
-<h1>TODO List</h1>
-<li>TODO: Add Player</li>
-<li>TODO: Select Player</li>
-<li>TODO: Select Team (1 of 2)</li>
-<li>TODO: All in Modals??</li>
-
-<button>Start Game</button>
-<button>Add Player</button>
-<button>Create Team</button>
-<button>Bekijk statistieken</button>
-
-<h1>Wish List</h1>
-<li>TODO: Speel Anoniem?</li>
-<li>TODO: Meer dan 1 persoon per team</li>
-<li>TODO: Login Screen, maybe later</li>
-<input placeholder="Voer hier de game-id in" #gameId style="margin: 5px;" />
-<button (click)="addGameId(gameId.value)" [routerLink]="['game']">
-  Ga naar Game
-</button>
+<div class="container-fluid">
+  <h3 style="text-align: center;">Maak je wedstrijd aan</h3>
+  <div ng-show="errorMessage">
+    <h3 class="errorDisplay">{{ errorMessage }}</h3>
+  </div>
+  <div class="card" style="margin: 2rem;">
+    <div class="card-body">
+      <h5 class="card-title">Speler 1</h5>
+      <p class="card-text">
+        <select [(ngModel)]="team1">
+          // value is an object
+          <option *ngFor="let player of players" [ngValue]="player.player_Id">
+            {{ player.firstName }} {{ player.lastName }}
+          </option>
+        </select>
+      </p>
+    </div>
+  </div>
+  <div class="card" style="margin: 2rem;">
+    <div class="card-body">
+      <h5 class="card-title">Speler 2</h5>
+      <p class="card-text">
+        <select [(ngModel)]="team2">
+          // value is an object
+          <option *ngFor="let player of players" [ngValue]="player.player_Id">
+            {{ player.firstName }} {{ player.lastName }}
+          </option>
+        </select>
+      </p>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div *ngIf="!ready">
+      <button class="btn-lg btn-danger" (click)="makeGame()">
+        Bevestig Spelers
+      </button>
+    </div>
+    <div *ngIf="ready">
+      <i class="fa fa-arrow-right"> </i>
+      <button class="btn-lg btn-primary" [routerLink]="['game/']">
+        Speel Spel
+      </button>
+    </div>
+    <div *ngIf="!ready">
+      <button class="btn-lg btn-secondary" [routerLink]="['home/']">
+        Menu
+      </button>
+    </div>
+  </div>
+</div>

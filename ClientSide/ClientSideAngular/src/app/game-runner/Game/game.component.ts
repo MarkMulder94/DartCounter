@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { GameService } from "src/app/Shared/game.service";
-import { Game } from "src/app/Shared/game.model";
+import { Game } from "src/app/Shared/models/game.model";
 import { HttpClient } from "@angular/common/http";
-import { Team } from "src/app/Shared/team.model";
-import { Player } from "src/app/Shared/player.model";
-import { User } from "src/app/Shared/user.model";
+import { Team } from "src/app/Shared/models/team.model";
+import { Player } from "src/app/Shared/models/player.model";
+import { User } from "src/app/Shared/models/user.model";
 
 @Component({
   selector: "app-game",
@@ -49,7 +49,8 @@ export class GameComponent implements OnInit {
 
   //#region LoadGameData From Api
   ngOnInit() {
-    this.getAsyncGameData(this.gameNumber);
+    console.log(this.service.gameId);
+    this.getAsyncGameData(this.service.gameId);
   }
   async getAsyncGameData(id: number) {
     this.game = await this.service.getAsyncGameData();
