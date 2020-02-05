@@ -11,9 +11,9 @@ import { User } from "../Shared/Models/user.model";
 export class GameRunnerComponent implements OnInit {
   noErrors: boolean = false;
   loaded: Promise<boolean>;
-  private ready: boolean = false;
+  public ready: boolean = false;
   constructor(private service: GameService, private http: HttpClient) {}
-  private players = [];
+  public players = [];
   gameMaker: number[] = [];
   team1: number;
   team2: number;

@@ -5,13 +5,6 @@
     <UserSecretsId>aspnet-Darts.Server-F7AFD07C-36C1-4EB1-A8DF-9F90A8BC4AF0</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Migrations\20200129123035_UpdatingPlayerModel.cs" />
-    <Compile Remove="Migrations\20200129123035_UpdatingPlayerModel.Designer.cs" />
-    <Compile Remove="Migrations\20200129123109_UpdatingPlayerModel.cs" />
-    <Compile Remove="Migrations\20200129123109_UpdatingPlayerModel.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.30" />

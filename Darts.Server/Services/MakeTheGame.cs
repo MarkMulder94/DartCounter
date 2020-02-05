@@ -13,7 +13,6 @@ namespace Darts.Server.Services
 
     {
         private readonly ApplicationDbContext _context;
-        private GameModel _currentGame;
         public MakeStartGame(ApplicationDbContext context)
         {
             _context = context;

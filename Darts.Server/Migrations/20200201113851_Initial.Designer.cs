@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Darts.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200129123754_Update")]
-    partial class Update
+    [Migration("20200201113851_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

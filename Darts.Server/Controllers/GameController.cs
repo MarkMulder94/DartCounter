@@ -30,12 +30,14 @@ namespace Darts.Server.Controllers
         {
             _context = context;
         }
+        // get by Id
         [HttpGet("{id}")]
         public async Task<GameModel> GetAllGames(int id)
         {
             var gameModel = await _context.Games.Include(x => x.TeamModel).ThenInclude(x => x.Players).ThenInclude(x => x.PlayerModel).Where(x => x.Game_Id == id).FirstOrDefaultAsync();
             return gameModel;
         }
+        
         [Route("GetAll/")]
         [HttpGet]
         public async Task<IEnumerable<GameModel>> GetAllGames()

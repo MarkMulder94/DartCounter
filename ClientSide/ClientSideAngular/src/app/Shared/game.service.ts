@@ -10,7 +10,7 @@ import { User } from "./Models/user.model";
   providedIn: "root"
 })
 export class GameService {
-  readonly rootURL = "https://localhost:44323/";
+  readonly rootURL = "https://dartsserver20200201125456.azurewebsites.net/";
   asyncResult: void;
   players: Player[] = [];
   public gameId: number = 1;

@@ -13,7 +13,7 @@ import { User } from "src/app/Shared/models/user.model";
 })
 export class GameComponent implements OnInit {
   // #region Variable's
-  private gameNumber: number = 2;
+  public gameNumber: number = 2;
   AverageTeam1: number = 0;
   AverageTeam2: number = 0;
   // Game
