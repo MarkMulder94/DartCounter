@@ -39,7 +39,7 @@ namespace Darts.Server
             services.AddRazorPages();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant Enterprise", Version = "v1.1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DartCounter", Version = "v1.0" });
             });
         }
         
@@ -82,7 +82,7 @@ namespace Darts.Server
 
             app.UseEndpoints(endpoints =>
             {
-                               endpoints.MapControllerRoute(
+                    endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
